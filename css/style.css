@@ -26,10 +26,12 @@ h1 {
   cursor: pointer;
   height: 50px;
   width: 100px;
+  cursor: pointer;
 }
 
 .buttons {
   text-align: center;
+  cursor: pointer;
 }
 
 .footer {
@@ -47,4 +49,5 @@ h2 {
   border: none;
   background-color: white;
   font-size: 30px;
+  cursor: pointer;
 }

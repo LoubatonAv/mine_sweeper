@@ -46,12 +46,6 @@ function countNegs(cellI, cellJ) {
   return negsCount;
 }
 
-function checkIfGameWon() {
-  if (gGame.shownCount === 14 && gGame.markedCount === 2) {
-    gameWon();
-  }
-}
-
 function renderRestartButton(value) {
   var elLife = document.querySelector('.restart');
   elLife.innerText = value;
@@ -68,33 +62,6 @@ function renderLives() {
   elCell.innerHTML = gLivesLeft;
 }
 
-// floodFill(i, j);
-// function floodFill(i, j) {
-//   var gNegs = 0;
-//   for (var xOffset = -1; xOffset <= 1; xOffset++) {
-//     for (var yOffset = -1; yOffset <= 1; yOffset++) {
-//       var i = i + xOffset;
-//       var j = j + yOffset;
-//       console.log('i:', i);
-//       console.log('j:', j);
-//       if (i > -1 && i < gBoard.length && j > -1 && gBoard[0].length) {
-//         var cell = gBoard[i][j];
-//         if (!cell.isMine && !cell.isShown) {
-//           var elCell = document.querySelector(`[data-i="${i}"][data-j="${j}"]`);
-//           console.log('eCell:', elCell);
-//           if (!cell.isShown) {
-//             cell.isShown = true;
-//             elCell.innerText = gNegs;
-//             elCell.classList.add('shown');
-//             gGame.shownCount++;
-//           }
-//         }
-//       }
-//     }
-//   }
-//   console.log('total:', gNegs);
-// }
-
 //creating the mines
 function getRandomMine(num, i, j) {
   var mines = 0;
@@ -102,7 +69,28 @@ function getRandomMine(num, i, j) {
     var celli = getRandomInt(0, gBoard.length);
     var cellj = getRandomInt(0, gBoard[0].length);
     if (celli === i && cellj === j) continue;
+
     gBoard[celli][cellj].isMine = true;
     mines++;
   }
+}
+
+//render the table updating the dom
+function renderTable() {
+  var strHTML = '';
+  for (var i = 0; i < gBoard.length; i++) {
+    strHTML += `<tr>\n`;
+    for (var j = 0; j < gBoard[0].length; j++) {
+      var cell = gBoard[i][j];
+
+      var className = cell.isShown ? 'shown' : 'hidden';
+      var flagged = cell.isMarked ? 'marked' : '';
+      strHTML += `\t<td data-i="${i}" data-j="${j}" class="cell ${className} ${flagged}" oncontextmenu="cellFlagged(this,event,${i},${j})" onclick="cellClicked(this, ${i}, ${j}) " ></td>\n`;
+    }
+
+    strHTML += `</tr>\n`;
+  }
+
+  var elSeats = document.querySelector('.board');
+  elSeats.innerHTML = strHTML;
 }

@@ -1,11 +1,8 @@
 'use strict';
 
 //To work on :
-//Unflag
-//MODAL
 //Adjacent- expandShown - function in pdf file
-//lives
-//win - when all flags are flagged and all other cells are shown
+//win - when all mines are flagged and all other cells are shown
 
 //Global vars
 const BOMB = '💣';
@@ -51,7 +48,7 @@ function createTable(size) {
     board[i] = [];
     for (var j = 0; j < size; j++) {
       var cell = {
-        minesAroundCount: 4,
+        minesAroundCount: 0,
         isMine: false,
         isMarked: false,
         isShown: false,
@@ -65,6 +62,7 @@ function createTable(size) {
 
 //Set the game difficulty
 function setDifficulty(size, mines) {
+  renderRestartButton('😀');
   clearInterval(gIntervalID);
   gLevel.size = size;
   gLevel.mines = mines;
@@ -78,6 +76,7 @@ function cellFlagged(elCell, e, i, j) {
 
   if (!gGame.isOn) return;
   var cell = gBoard[i][j];
+  if (cell.isShown) return;
   if (cell.isMarked === false) {
     cell.isMarked = true;
     elCell.innerText = FLAG;
@@ -101,6 +100,7 @@ function cellClicked(elCell, i, j) {
     gClickCounter++;
   }
   var cell = gBoard[i][j];
+
   if (cell.isShown) return;
   if (!cell.isShown) {
     cell.isShown = true;
@@ -120,33 +120,28 @@ function cellClicked(elCell, i, j) {
     var gNegs = countNegs(i, j);
     elCell.innerText = gNegs;
     cell.minesAroundCount = gNegs;
-
-    if (gNegs === 0) {
-      expandShown(elCell, gBoard, i, j);
-    }
-
+    console.log('cell:', cell);
     checkIfGameWon();
   }
 }
 
-function expandShown(elCell, board, rowIdx, colIdx) {}
+//after i get the neigh to work
+// function checkShown() {
+//   var counter = 0;
+//   for (var i = 0; i < gBoard.length; i++) {
+//     for (var j = 0; i < gBoard.length; j++) {
+//       var cell = gBoard[i][j];
+//       if (cell.isShown) counter++;
+//     }
+//   }
+//   console.log('counter:', counter);
+// }
 
-//render the table updating the dom
-function renderTable() {
-  var strHTML = '';
-  for (var i = 0; i < gBoard.length; i++) {
-    strHTML += `<tr>\n`;
-    for (var j = 0; j < gBoard[0].length; j++) {
-      var cell = gBoard[i][j];
-
-      var className = cell.isShown ? 'shown' : 'hidden';
-      var flagged = cell.isMarked ? 'marked' : '';
-      strHTML += `\t<td data-i="${i}" data-j="${j}" class="cell ${className} ${flagged}" oncontextmenu="cellFlagged(this,event,${i},${j})" onclick="cellClicked(this, ${i}, ${j}) " ></td>\n`;
-    }
-
-    strHTML += `</tr>\n`;
+function checkIfGameWon() {
+  if (
+    gGame.shownCount === gLevel.size ** 2 - gLevel.mines &&
+    gGame.markedCount === gLevel.mines
+  ) {
+    gameWon();
   }
-
-  var elSeats = document.querySelector('.board');
-  elSeats.innerHTML = strHTML;
 }
