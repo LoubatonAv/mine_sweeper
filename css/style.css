@@ -1,0 +1,50 @@
+table {
+  margin: auto;
+
+  padding: 5px;
+}
+
+.cell {
+  height: 50px;
+  width: 50px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.hidden {
+  background: rgb(167, 167, 167);
+}
+
+.shown {
+  background: transparent;
+}
+
+.btn {
+  border: none;
+  cursor: pointer;
+  height: 50px;
+  width: 100px;
+}
+
+.buttons {
+  text-align: center;
+}
+
+.footer {
+  margin-top: 20%;
+  text-align: center;
+}
+
+h2 {
+  text-align: center;
+}
+
+.restart {
+  margin-top: 5%;
+  margin-left: 49%;
+  border: none;
+  background-color: white;
+  font-size: 30px;
+}
