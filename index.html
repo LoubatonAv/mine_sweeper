@@ -7,13 +7,16 @@
     <link rel="stylesheet" href="css/style.css" />
     <title>Minesweeper!</title>
   </head>
+
   <body onload="init()">
-    <h1>Mine sweeper!</h1>
+    <div>
+      <img src="photos/1.png" alt="" />
+      <h1>Mine sweeper!</h1>
+    </div>
     <h2>
       Time :
       <span class="time"></span>
     </h2>
-
     <div class="buttons">
       <button class="btn" onclick="setDifficulty(4,2)">Easy</button>
       <button class="btn" onclick="setDifficulty(8,12)">Medium</button>
@@ -25,10 +28,11 @@
     <button class="restart" onclick="restartGame()">😀</button>
 
     <h2 class="lost">Lives left :<span class="lives"></span></h2>
+    <div class="msg"></div>
+    <footer class="footer">Avner Luvton</footer>
 
     <!-- <script src="js/util.js"></script> -->
     <script src="utils.js"></script>
     <script src="js/main.js"></script>
   </body>
-  <footer class="footer"></footer>
 </html>

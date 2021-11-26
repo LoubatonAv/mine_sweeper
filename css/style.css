@@ -14,28 +14,54 @@ h1 {
 }
 
 .hidden {
-  background: rgb(167, 167, 167);
+  background: rgb(107, 107, 107);
+  border-width: 2px;
+  border-style: outset;
+  text-align: center;
+}
+
+.msg {
+  font-size: 25px;
+  text-align: center;
 }
 
 .shown {
-  background: transparent;
+  background: white;
 }
 
 .btn {
   border: none;
+  padding: 10px;
   cursor: pointer;
   height: 50px;
-  width: 100px;
+  width: 90px;
   cursor: pointer;
+  background: none;
 }
 
 .buttons {
-  text-align: center;
   cursor: pointer;
+  padding: 5px;
+  display: inline-block;
+  margin-left: 42%;
+}
+
+.mined {
+  background-color: red;
+}
+
+.btn:hover {
+  background-color: #626262;
+  color: white;
+  border-radius: 30%;
+}
+
+.btn:active {
+  transform: translateY(2px);
 }
 
 .footer {
-  margin-top: 20%;
+  margin-top: 4%;
   text-align: center;
 }
 
@@ -43,8 +69,28 @@ h2 {
   text-align: center;
 }
 
+img {
+  top: 0;
+  left: 0;
+  width: 100%;
+  position: fixed;
+  -webkit-mask-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(rgba(0, 0, 0, 1)),
+    to(rgba(0, 0, 0, 0))
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1),
+    rgba(216, 148, 148, 0)
+  );
+  z-index: -1;
+}
+
 .restart {
-  margin-top: 5%;
+  margin-top: 2%;
   margin-left: 49%;
   border: none;
   background-color: white;
