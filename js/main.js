@@ -57,6 +57,8 @@ function createTable(size) {
 
 //Set the game difficulty
 function setDifficulty(size, mines) {
+  var elTimer = document.querySelector('.time');
+  elTimer.innerText = '0.0';
   renderRestartButton('😀');
   clearInterval(gIntervalID);
   gLevel.size = size;
@@ -160,6 +162,7 @@ function closeModal() {
 
 //opening the modal
 function openModal(msg, color) {
+  clearInterval(gIntervalID);
   var elModal = document.querySelector('.modal');
   elModal.style.display = 'block';
   var elPage = document.querySelector('body');

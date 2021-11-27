@@ -29,6 +29,9 @@ function renderRestartButton(value) {
 }
 
 function restartGame() {
+  var elTimer = document.querySelector('.time');
+  elTimer.innerText = '0.0';
+  clearInterval(gIntervalID);
   renderRestartButton('😀');
   init();
   renderTable();
