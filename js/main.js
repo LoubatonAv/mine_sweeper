@@ -35,7 +35,7 @@ function init() {
   renderTable();
 }
 
-//Create the table to the Model
+//Create the table in them model
 function createTable(size) {
   var board = [];
 
@@ -90,14 +90,14 @@ function cellFlagged(elCell, e, i, j) {
   }
 }
 
-//Click cells to reveal + placing mines for the first time
+//Click cells to reveal
 function cellClicked(elCell, i, j) {
   var cell = gBoard[i][j];
   if (!gGame.isOn) return;
   if (cell.isMarked) return;
 
   if (gClickCounter === 0) {
-    getRandomMine(gLevel.mines, i, j);
+    getRandomMine(gLevel.mines, i, j); //first click starts the timer + sets mines
     setMinesNegsCount(gBoard);
     startTimeInterval();
     gClickCounter++;
@@ -143,6 +143,8 @@ function isWin() {
 }
 
 closeModal();
+
+//closing the modal when click anywhere on the screen
 function closeModal() {
   window.addEventListener(
     'click',
@@ -155,6 +157,8 @@ function closeModal() {
     true
   );
 }
+
+//opening the modal
 function openModal(msg, color) {
   var elModal = document.querySelector('.modal');
   elModal.style.display = 'block';
@@ -165,6 +169,7 @@ function openModal(msg, color) {
   elH3.style.backgroundColor = color;
 }
 
+//in case game is won
 function gameWon() {
   gGame.isOn = false;
   console.log('GAME won!');
@@ -173,6 +178,7 @@ function gameWon() {
   clearInterval(gIntervalID);
 }
 
+//remove the message after you step on a mine
 function messageRender() {
   setTimeout(function () {
     var elLives = document.querySelector('.msg');
@@ -180,6 +186,7 @@ function messageRender() {
   }, 1500);
 }
 
+//setting the neighboring mines
 function setMinesNegsCount(board) {
   for (var i = 0; i < board.length; i++) {
     for (var j = 0; j < board.length; j++) {
@@ -190,6 +197,7 @@ function setMinesNegsCount(board) {
   }
 }
 
+//detonate all bombs when lost
 function revealAllMines() {
   for (var i = 0; i < gBoard.length; i++) {
     for (var j = 0; j < gBoard.length; j++) {
@@ -204,6 +212,33 @@ function revealAllMines() {
   }
 }
 
+//creating the mines
+function getRandomMine(numberOfMines, currI, currJ) {
+  var mineCount = 0;
+  var mines = [];
+  var mineFound = false;
+  while (mineCount < numberOfMines) {
+    mineFound = false;
+    var cellI = getRandomInt(0, gBoard.length);
+    var cellJ = getRandomInt(0, gBoard[0].length);
+    if (cellI === currI && cellJ === currJ) continue;
+    for (var i = 0; i < mines.length; i++) {
+      var mine = mines[i];
+      if (mine.i === cellI && mine.j === cellJ) {
+        mineFound = true;
+        break;
+      }
+    }
+
+    if (mineFound) continue;
+    mines.push({ i: cellI, j: cellJ });
+    // console.log('mines:', mines);
+    gBoard[cellI][cellJ].isMine = true;
+    mineCount++;
+  }
+}
+
+//counting the neighboring mines
 function countMines(cellI, cellJ, board) {
   var negMinesCount = 0;
   for (var i = cellI - 1; i <= cellI + 1; i++) {
@@ -218,6 +253,7 @@ function countMines(cellI, cellJ, board) {
   return negMinesCount;
 }
 
+//reveal neighbors
 function expandShown(board, elCellI, elCellJ) {
   for (var i = elCellI - 1; i <= elCellI + 1; i++) {
     if (i < 0 || i >= board.length) continue;

@@ -34,31 +34,8 @@ function restartGame() {
   renderTable();
 }
 
+//show lives
 function renderLives() {
   var elCell = document.querySelector('.lives');
   elCell.innerHTML = gLivesLeft;
-}
-
-//creating the mines
-function getRandomMine(numberOfMines, currI, currJ) {
-  var mineCount = 0;
-  var mines = [];
-  var mineFound = false;
-  while (mineCount < numberOfMines) {
-    mineFound = false;
-    var cellI = getRandomInt(0, gBoard.length);
-    var cellJ = getRandomInt(0, gBoard[0].length);
-    if (cellI === currI && cellJ === currJ) continue;
-    for (var i = 0; i < mines.length; i++) {
-      var mine = mines[i];
-      if (mine.i === cellI && mine.j === cellJ) {
-        mineFound = true;
-        break;
-      }
-    }
-    if (mineFound) continue;
-    mines.push({ i: cellI, j: cellJ });
-    gBoard[cellI][cellJ].isMine = true;
-    mineCount++;
-  }
 }
