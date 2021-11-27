@@ -117,6 +117,7 @@ function cellClicked(elCell, i, j) {
     messageRender();
     if (gLivesLeft === 0) {
       gameOver();
+      openModal('You lost!', 'tomato');
     }
   } else {
     if (cell.minesAroundCount > 0) {
@@ -141,9 +142,33 @@ function isWin() {
   gameWon();
 }
 
+closeModal();
+function closeModal() {
+  window.addEventListener(
+    'click',
+    function (e) {
+      var elModal = document.querySelector('.modal');
+      elModal.style.display = 'none';
+      var elPage = document.querySelector('body');
+      elPage.style.backgroundColor = 'white';
+    },
+    true
+  );
+}
+function openModal(msg, color) {
+  var elModal = document.querySelector('.modal');
+  elModal.style.display = 'block';
+  var elPage = document.querySelector('body');
+  elPage.style.backgroundColor = '#ffffff7f';
+  var elH3 = elModal.querySelector('h3');
+  elH3.innerText = msg;
+  elH3.style.backgroundColor = color;
+}
+
 function gameWon() {
   gGame.isOn = false;
   console.log('GAME won!');
+  openModal('You won!', 'green');
   renderRestartButton('😁');
   clearInterval(gIntervalID);
 }
